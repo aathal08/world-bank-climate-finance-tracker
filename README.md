@@ -1,38 +1,75 @@
 # World Bank Climate Finance Flow Tracker
 
-FY23 IBRD/IDA project-level climate finance and country-level ND-GAIN analysis, with optional 2023 World Development Indicators normalization.
+A reproducible Streamlit dashboard analyzing FY23 IBRD/IDA project-level climate finance and its descriptive relationship with the 2023 ND-GAIN Country Index, with optional 2023 World Development Indicators normalization.
+
+## What it does
+
+- Parses the official World Bank FY23 project-level climate co-benefits disclosure.
+- Reconstructs project climate finance as disclosed climate-finance percentage × total commitment.
+- Aggregates projects by country/entity while retaining regional and multicountry entities separately.
+- Joins single-country entities to a frozen 2023 ND-GAIN Country Index snapshot.
+- Reports descriptive Pearson and Spearman correlations.
+- Provides optional WDI population/GDP normalization.
+- Includes validation tests for data integrity and reproducibility.
 
 ## Run
 
 ```bash
-pip install -r requirements.txt
-streamlit run app.py
+python -m pip install -r requirements.txt
+python scripts/validate_data.py
+python -m streamlit run app.py
 ```
 
-## Data and methodology
+The committed CSV datasets make the dashboard runnable without downloading the World Bank source again. To rebuild the project-level data from the official PDF, run:
 
-The project uses the World Bank FY23 project-level climate finance data, a frozen 2023 ND-GAIN snapshot, and optional World Development Indicators (WDI) data. Project-level climate finance is reconstructed from total commitment and the reported climate-finance percentage. Because project percentages are rounded, the reconstructed total can differ slightly from the official aggregate.
+```bash
+python scripts/run_pipeline.py
+```
 
-The country-level analysis maps project entities to ISO3 codes using `data/country_name_mapping.csv` as the authoritative mapping. Regional and multicountry projects are retained separately rather than being forced into a single-country interpretation.
+For an offline rerun using an existing extracted text file:
 
-The ND-GAIN analysis is descriptive and does not establish causality.
+```bash
+python scripts/run_pipeline.py --skip-download
+```
+
+## Key methodology notes
+
+**Climate finance.** Project climate finance is reconstructed from the disclosed percentage and total commitment. Because the source percentages are rounded, the reconstructed FY23 total can differ slightly from the official aggregate.
+
+**ND-GAIN.** The analysis uses the overall 2023 ND-GAIN Country Index score, not the separate Vulnerability or Readiness components. Higher scores indicate stronger overall resilience/readiness. The snapshot is frozen for reproducibility.
+
+**Country mapping.** `data/country_name_mapping.csv` is the single authoritative mapping between World Bank country labels, ND-GAIN country names, and ISO3 codes. Regional/multicountry entities are retained in portfolio totals but excluded from the single-country ND-GAIN comparison. South Sudan and Kosovo are explicitly retained as unmatched in the frozen ND-GAIN snapshot.
+
+**Statistics.** Correlations are descriptive associations within the FY23 single-country sample. They do not establish causality or an allocation rule. Portfolio share is a normalization by total commitment, not a measure of climate need.
 
 ## Validation
 
-The repository includes automated tests for project counts, financial totals, mappings, ND-GAIN matching, aggregation reconciliation, and statistical reproducibility.
+Run:
 
 ```bash
 pytest -q
 python scripts/validate_data.py
 ```
 
-## Structure
+The validated dataset contains 322 FY23 project records, 309 projects with non-zero disclosed climate finance, 99 country/entity rows, 94 single-country entities, and 92 single-country ND-GAIN matches.
 
-- `app.py` — Streamlit dashboard
-- `data/` — curated input and generated analysis datasets
-- `scripts/` — download, parse, mapping, enrichment, analysis, and validation pipeline
-- `tests/` — automated validation tests
+## Repository structure
+
+```text
+.
+├── app.py
+├── data/
+├── scripts/
+├── tests/
+├── requirements.txt
+├── LICENSE
+└── README.md
+```
 
 ## Sources
 
-See `data/source_urls.txt` and `data/ndgain_metadata.txt` for source and attribution details.
+See `data/source_urls.txt` for official source links and `data/ndgain_metadata.txt` for ND-GAIN snapshot, methodology, and attribution notes.
+
+## License
+
+The original code and documentation are MIT licensed. Third-party datasets and source documents remain subject to their original providers' terms.
