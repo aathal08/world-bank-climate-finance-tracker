@@ -1,0 +1,11 @@
+Official World Bank FY23 project-level climate co-benefits PDF:
+https://thedocs.worldbank.org/en/doc/d4a3fae669d0274d249ef9331dffe73b-0020012024/original/FY23-Project-level-CCB-data.pdf
+
+World Bank annual climate finance page:
+https://www.worldbank.org/en/programs/world-bank-development-finance-with-climate-co-benefits/annual-development-finance-with-climate-co-benefits
+
+ND-GAIN Country Index:
+https://gain-new.crc.nd.edu/ranking
+
+World Bank Indicators API documentation:
+https://datahelpdesk.worldbank.org/knowledgebase/articles/898581-api-basic-call-structures
