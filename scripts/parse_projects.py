@@ -1,4 +1,11 @@
-"""Parse text extracted from the official World Bank FY23 climate-finance PDF."""
+"""Parse text extracted from the official World Bank FY23 climate-finance PDF.
+
+The PDF extraction format is not stable: pypdf may put project IDs, indices,
+project names, and metadata fields on separate lines. It may also wrap the
+financial rows differently. This parser therefore normalizes whitespace first,
+parses project blocks independently from the numeric rows, and validates that
+both contain the expected 322 source rows before pairing them by source order.
+"""
 from __future__ import annotations
 
 import argparse
@@ -8,9 +15,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-PROJECT_START_RE = re.compile(r"P\d{6}\s+\d+\b")
-PROJECT_ID_INDEX_RE = re.compile(r"^(P\d{6})\s+(\d+)\s+(.*)$", re.DOTALL)
-NUMBER_RE = re.compile(r"(\d+\.\d+)%\s+([\d,]+\.\d+)\s+([\d,]+\.\d+)\s+([\d,]+\.\d+)")
+PROJECT_START_RE = re.compile(r"P\d{6}\s+\d{1,3}\s+")
+PROJECT_ID_INDEX_RE = re.compile(r"^(P\d{6})\s+(\d{1,3})\s+(.*)$", re.DOTALL)
+NUMBER_RE = re.compile(
+    r"(\d+(?:\.\d+)?)%\s+"
+    r"([\d,]+(?:\.\d+)?)\s+"
+    r"([\d,]+(?:\.\d+)?)\s+"
+    r"([\d,]+(?:\.\d+)?)"
+)
 REGION_RE = re.compile(r"\b(AFE|AFW|EAP|ECA|LCR|MNA|SAR)\b")
 GLOBAL_PRACTICES = (
     "AgricultureandFood",
@@ -32,13 +44,13 @@ GLOBAL_PRACTICES = (
 GP_RE = re.compile("(?:" + "|".join(re.escape(x) for x in GLOBAL_PRACTICES) + ")")
 
 
-def _normalize(text: str) -> str:
-    """Normalize PDF whitespace so extraction layout does not affect parsing."""
-    return re.sub(r"\s+", " ", text.replace("\u00a0", " ")).strip()
+def _normalize_text(raw: str) -> str:
+    """Collapse all PDF whitespace so wrapped fields become parseable tokens."""
+    return " ".join(raw.split())
 
 
 def _parse_project_block(block: str) -> dict:
-    block = _normalize(block)
+    block = _normalize_text(block)
     match = PROJECT_ID_INDEX_RE.match(block)
     if not match:
         raise ValueError(f"Could not parse project block: {block[:120]!r}")
@@ -58,10 +70,12 @@ def _parse_project_block(block: str) -> dict:
 
     project_name = remainder[:region_match.start()].strip()
     country = tail[:gp_match.start()].strip()
-    global_practice = gp_match.group(0)
+    global_practice = gp_match.group(0).strip()
 
     if not project_name or not country:
-        raise ValueError(f"Incomplete metadata for {pid}: project={project_name!r}, country={country!r}")
+        raise ValueError(
+            f"Incomplete metadata for {pid}: project={project_name!r}, country={country!r}"
+        )
 
     return {
         "project_id": pid,
@@ -81,33 +95,46 @@ def parse(raw_text_path: Path):
         )
 
     raw = raw_text_path.read_text(encoding="utf-8")
+    normalized = _normalize_text(raw)
 
-    # Do not depend on line boundaries. Different pypdf/runner versions can
-    # place a whole PDF page on one line or wrap project fields differently.
-    starts = list(PROJECT_START_RE.finditer(raw))
+    # pypdf can emit a project ID and its index as separate lines, so do not
+    # depend on line starts. Project metadata is one ordered block per project;
+    # the next project ID marks the end of the current block.
+    starts = [m.start() for m in PROJECT_START_RE.finditer(normalized)]
     projects = []
-    for pos, start_match in enumerate(starts):
-        end = starts[pos + 1].start() if pos + 1 < len(starts) else len(raw)
-        projects.append(_parse_project_block(raw[start_match.start():end]))
+    for pos, start in enumerate(starts):
+        end = starts[pos + 1] if pos + 1 < len(starts) else len(normalized)
+        projects.append(_parse_project_block(normalized[start:end]))
 
+    # Financial rows occur after the project metadata. Searching the normalized
+    # text (rather than matching whole lines) handles wrapped numeric cells and
+    # different pypdf text-item layouts.
     numbers = []
-    for match in NUMBER_RE.finditer(raw):
+    search_text = normalized[starts[0]:] if starts else ""
+    for match in NUMBER_RE.finditer(search_text):
         pct, adapt, mitig, total = match.groups()
-        numbers.append({
-            "climate_finance_pct": float(pct),
-            "adaptation_musd": float(adapt.replace(",", "")),
-            "mitigation_musd": float(mitig.replace(",", "")),
-            "total_commitment_musd": float(total.replace(",", "")),
-        })
+        numbers.append(
+            {
+                "climate_finance_pct": float(pct),
+                "adaptation_musd": float(adapt.replace(",", "")),
+                "mitigation_musd": float(mitig.replace(",", "")),
+                "total_commitment_musd": float(total.replace(",", "")),
+            }
+        )
 
     if len(projects) != len(numbers):
-        raise ValueError(f"Parser mismatch: {len(projects)} project rows vs {len(numbers)} numeric rows")
+        raise ValueError(
+            f"Parser mismatch: {len(projects)} project rows vs {len(numbers)} numeric rows"
+        )
     if len(projects) != 322:
         raise ValueError(f"Expected 322 FY23 project rows, found {len(projects)}")
 
     indices = [p["index"] for p in projects]
     if indices != list(range(1, 323)):
-        raise ValueError("Project indices are not the expected sequential 1..322; refusing to silently pair rows.")
+        raise ValueError(
+            "Project indices are not the expected sequential 1..322; "
+            "refusing to silently pair rows."
+        )
     ids = [p["project_id"] for p in projects]
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate project IDs detected during parsing.")
@@ -118,7 +145,12 @@ def parse(raw_text_path: Path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("raw_text", type=Path, nargs="?", default=ROOT / "data" / "raw_fy23_pdf_text.txt")
+    parser.add_argument(
+        "raw_text",
+        type=Path,
+        nargs="?",
+        default=ROOT / "data" / "raw_fy23_pdf_text.txt",
+    )
     args = parser.parse_args()
 
     rows = parse(args.raw_text)
