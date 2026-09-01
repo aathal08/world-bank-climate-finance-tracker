@@ -1,0 +1,17 @@
+__pycache__/
+.pytest_cache/
+*.py[cod]
+
+.venv/
+venv/
+env/
+.streamlit/
+
+# Downloaded/source artifacts and generated API extracts
+data/source/
+data/raw_fy23_pdf_text.txt
+data/wdi_2023.csv
+data/country_climate_finance_vs_ndgain_wdi.csv
+
+.DS_Store
+Thumbs.db
