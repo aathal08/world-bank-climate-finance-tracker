@@ -1,0 +1,188 @@
+rank,country,income_group,ndgain_score
+1,Norway,Upper,75.5
+2,Finland,Upper,73.3
+3,Switzerland,Upper,72.0
+4,Denmark,Upper,70.9
+5,Singapore,Upper,70.6
+6,Sweden,Upper,69.8
+7,United Kingdom,Upper,69.7
+8,New Zealand,Upper,69.3
+9,Austria,Upper,69.0
+9,Germany,Upper,69.0
+11,Australia,Upper,68.9
+12,Iceland,Upper,68.6
+13,Republic of Korea,Upper,68.5
+14,Canada,Upper,68.2
+15,France,Upper,67.2
+15,Luxembourg,Upper,67.2
+17,United States,Upper,66.8
+18,Netherlands,Upper,65.9
+19,Japan,Upper,65.8
+20,Czech Republic,Upper,64.7
+21,Ireland,Upper,64.2
+22,Estonia,Upper,63.9
+22,Slovenia,Upper,63.9
+24,Portugal,Upper,62.8
+25,Belgium,Upper,62.6
+26,Lithuania,Upper,61.9
+27,Israel,Upper,61.7
+28,Poland,Upper,61.5
+29,Barbados,Lower middle,61.0
+29,Spain,Upper,61.0
+29,Latvia,Upper,61.0
+32,United Arab Emirates,Upper,60.2
+33,Chile,Upper middle,59.9
+33,Greece,Upper middle,59.9
+35,Italy,Upper,59.8
+36,Kazakhstan,Upper middle,59.6
+36,Qatar,Upper,59.6
+38,Georgia,Upper middle,58.8
+39,China,Upper middle,58.7
+40,Malta,Upper,58.6
+41,Russian Federation,Upper,58.4
+42,Saudi Arabia,Upper,58.2
+43,Cyprus,Upper,57.7
+44,Mauritius,Upper middle,57.6
+45,Armenia,Upper middle,57.2
+46,Grenada,Lower middle,57.1
+47,Hungary,Upper,57.0
+47,Slovakia,Upper,57.0
+49,Malaysia,Upper middle,56.9
+50,Belarus,Upper middle,56.8
+51,Brunei Darussalam,Upper,56.7
+52,Uruguay,Upper middle,56.6
+53,Croatia,Upper,55.6
+54,Bulgaria,Upper middle,55.5
+55,Kuwait,Upper,55.4
+56,Turkey,Upper middle,55.3
+57,Macedonia,Upper middle,55.1
+57,Montenegro,Upper middle,55.1
+59,Mongolia,Lower middle,54.8
+60,Bahrain,Upper,54.6
+61,Kyrgyzstan,Lower middle,54.2
+61,Oman,Upper,54.2
+63,Costa Rica,Upper middle,53.9
+64,Dominica,Lower middle,53.8
+64,Saint Lucia,Upper middle,53.8
+66,St Vincent & Grenadines,Upper middle,53.6
+67,Uzbekistan,Lower middle,53.5
+68,Nauru,Lower middle,53.4
+69,Morocco,Lower middle,53.1
+70,Thailand,Upper middle,52.7
+70,Tuvalu,Low,52.7
+72,Tunisia,Lower middle,52.4
+72,Ukraine,Upper middle,52.4
+74,Jordan,Lower middle,52.3
+74,Moldova,Upper middle,52.3
+76,Albania,Upper middle,52.1
+77,Azerbaijan,Upper middle,52.0
+78,Cape Verde,Lower middle,51.5
+78,Seychelles,Upper middle,51.5
+80,Romania,Upper,51.4
+80,Serbia,Upper middle,51.4
+82,Bosnia & Herzegovina,Upper middle,51.2
+82,Fiji,Lower middle,51.2
+84,Botswana,Upper middle,49.9
+85,Argentina,Upper middle,49.6
+85,Iran,Lower middle,49.6
+87,Paraguay,Upper middle,49.4
+88,Jamaica,Lower middle,49.2
+89,Brazil,Upper middle,49.1
+90,Antigua and Barbuda,Upper middle,49.0
+90,Peru,Lower middle,49.0
+92,Algeria,Lower middle,48.9
+93,Tajikistan,Low,48.8
+94,Bahamas,Upper middle,48.7
+94,Mexico,Upper middle,48.7
+94,Panama,Upper middle,48.7
+97,Colombia,Upper middle,48.4
+97,Indonesia,Lower middle,48.4
+97,Trinidad & Tobago,Upper middle,48.4
+100,Bhutan,Lower middle,48.2
+101,Viet Nam,Lower middle,48.1
+101,South Africa,Lower middle,48.1
+103,Egypt,Upper middle,47.0
+104,Palau,Upper middle,46.6
+105,Dominican Republic,Upper middle,46.5
+106,Suriname,Upper middle,46.4
+107,Namibia,Lower middle,46.3
+107,El Salvador,Lower middle,46.3
+109,Samoa,Lower middle,45.9
+110,Philippines,Lower middle,45.6
+111,India,Lower middle,45.5
+111,Sri Lanka,Lower middle,45.5
+113,Guyana,Upper middle,45.3
+114,Maldives,Upper middle,45.2
+115,Ghana,Lower middle,45.0
+116,Cuba,NA,44.9
+117,Kiribati,Low,44.5
+117,Lebanon,Lower middle,44.5
+119,Libya,Upper middle,44.3
+120,Guatemala,Lower middle,44.2
+121,Dem. People's Rep. of Korea,NA,44.0
+122,Belize,Lower middle,43.6
+122,Ecuador,Lower middle,43.6
+122,Nepal,Low,43.6
+125,Turkmenistan,Upper middle,43.4
+126,Iraq,Lower middle,43.3
+126,Rwanda,Low,43.3
+128,Swaziland,Lower middle,42.9
+129,Togo,Low,42.7
+130,Gabon,Upper middle,42.6
+131,Laos,Lower middle,42.5
+131,Zambia,Low,42.5
+133,Equatorial Guinea,Upper middle,42.4
+134,Timor-Leste,Lower middle,42.3
+134,Tonga,Lower middle,42.3
+136,Bolivia,Lower middle,41.7
+136,Marshall Islands,Lower middle,41.7
+136,Nicaragua,Lower middle,41.7
+139,Côte d'Ivoire,Lower middle,41.5
+139,Lesotho,Low,41.5
+141,Sao Tome & Principe,Lower middle,41.4
+142,Djibouti,Lower middle,41.0
+143,Senegal,Low,40.9
+143,Venezuela,Upper middle,40.9
+145,Honduras,Lower middle,40.7
+146,Cambodia,Low,40.5
+146,Vanuatu,Low,40.5
+148,Gambia,Low,40.3
+148,Kenya,Low,40.3
+150,Tanzania,Low,39.8
+151,Pakistan,Low,39.2
+152,Guinea,Low,38.9
+153,Mauritania,Lower middle,38.8
+154,Cameroon,Low,38.7
+155,Nigeria,Low,38.6
+156,Benin,Low,38.5
+156,Ethiopia,Low,38.5
+156,Mozambique,Low,38.5
+156,Solomon Islands,Low,38.5
+160,Angola,Lower middle,38.3
+161,Burkina Faso,Low,37.7
+162,Somalia,Low,37.5
+163,Comoros,Low,37.4
+163,Uganda,Low,37.4
+165,Micronesia,Low,37.3
+166,Liberia,Low,37.1
+166,Papua New Guinea,Low,37.1
+168,Myanmar,Low,36.9
+168,Malawi,Low,36.9
+168,Syria,Low,36.9
+171,Congo,Lower middle,36.1
+171,Zimbabwe,Low,36.1
+173,Burundi,NA,36.0
+174,Bangladesh,Lower middle,35.5
+175,Yemen,Low,35.4
+176,Haiti,Low,35.3
+176,Mali,Low,35.3
+178,Madagascar,Low,35.2
+179,Niger,Low,35.1
+180,Sierra Leone,Low,35.0
+181,Afghanistan,Low,33.2
+181,Guinea-Bissau,Low,33.2
+183,Dem. Rep. of the Congo,Low,32.7
+184,Sudan,Low,31.3
+185,Eritrea,Low,31.1
+186,Central African Rep.,Low,27.7
+187,Chad,Low,27.4
