@@ -1,0 +1,100 @@
+country_wb_label,ndgain_country,ndgain_iso3,match_status
+India,India,IND,matched
+Turkiye,Turkey,TUR,matched
+Bangladesh,Bangladesh,BGD,matched
+Pakistan,Pakistan,PAK,matched
+Indonesia,Indonesia,IDN,matched
+Colombia,Colombia,COL,matched
+Philippines,Philippines,PHL,matched
+CongoDemocraticRepublicof,Dem. Rep. of the Congo,COD,matched
+WesternandCentralAfrica,,,regional_or_multicountry
+EasternandSouthernAfrica,,,regional_or_multicountry
+Tanzania,Tanzania,TZA,matched
+Ethiopia,Ethiopia,ETH,matched
+Argentina,Argentina,ARG,matched
+Nigeria,Nigeria,NGA,matched
+China,China,CHN,matched
+Brazil,Brazil,BRA,matched
+Kenya,Kenya,KEN,matched
+Mozambique,Mozambique,MOZ,matched
+Morocco,Morocco,MAR,matched
+DominicanRepublic,Dominican Republic,DOM,matched
+Coted'Ivoire,Côte d'Ivoire,CIV,matched
+Madagascar,Madagascar,MDG,matched
+EgyptArabRepublicof,Egypt,EGY,matched
+Ecuador,Ecuador,ECU,matched
+SouthAfrica,South Africa,ZAF,matched
+Senegal,Senegal,SEN,matched
+Jordan,Jordan,JOR,matched
+Romania,Romania,ROU,matched
+Mali,Mali,MLI,matched
+Peru,Peru,PER,matched
+CostaRica,Costa Rica,CRI,matched
+Niger,Niger,NER,matched
+Tunisia,Tunisia,TUN,matched
+Mexico,Mexico,MEX,matched
+Cameroon,Cameroon,CMR,matched
+Benin,Benin,BEN,matched
+Ghana,Ghana,GHA,matched
+Zambia,Zambia,ZMB,matched
+Angola,Angola,AGO,matched
+Uzbekistan,Uzbekistan,UZB,matched
+Chad,Chad,TCD,matched
+Albania,Albania,ALB,matched
+Chile,Chile,CHL,matched
+Uganda,Uganda,UGA,matched
+Serbia,Serbia,SRB,matched
+CentralAfrica,,,regional_or_multicountry
+YemenRepublicof,Yemen,YEM,matched
+BurkinaFaso,Burkina Faso,BFA,matched
+Bolivia,Bolivia,BOL,matched
+Lebanon,Lebanon,LBN,matched
+Panama,Panama,PAN,matched
+Somalia,Somalia,SOM,matched
+KyrgyzRepublic,Kyrgyzstan,KGZ,matched
+Nepal,Nepal,NPL,matched
+Malawi,Malawi,MWI,matched
+Paraguay,Paraguay,PRY,matched
+Vietnam,Viet Nam,VNM,matched
+Barbados,Barbados,BRB,matched
+Rwanda,Rwanda,RWA,matched
+SouthSudan,South Sudan,SSD,name_mapped_no_ndgain_score
+Guatemala,Guatemala,GTM,matched
+SriLanka,Sri Lanka,LKA,matched
+Georgia,Georgia,GEO,matched
+Burundi,Burundi,BDI,matched
+CongoRepublicof,Congo,COG,matched
+Botswana,Botswana,BWA,matched
+Moldova,Moldova,MDA,matched
+Tajikistan,Tajikistan,TJK,matched
+LaoPeople'sDemocraticRepublic,Laos,LAO,matched
+BosniaandHerzegovina,Bosnia & Herzegovina,BIH,matched
+ElSalvador,El Salvador,SLV,matched
+Haiti,Haiti,HTI,matched
+Liberia,Liberia,LBR,matched
+Cambodia,Cambodia,KHM,matched
+Armenia,Armenia,ARM,matched
+Guinea,Guinea,GIN,matched
+Mauritania,Mauritania,MRT,matched
+Togo,Togo,TGO,matched
+Timor-Leste,Timor-Leste,TLS,matched
+Croatia,Croatia,HRV,matched
+Fiji,Fiji,FJI,matched
+Tuvalu,Tuvalu,TUV,matched
+Comoros,Comoros,COM,matched
+CaboVerde,Cape Verde,CPV,matched
+SouthAsia,,,regional_or_multicountry
+SierraLeone,Sierra Leone,SLE,matched
+Djibouti,Djibouti,DJI,matched
+St.VincentandtheGrenadines,St Vincent & Grenadines,VCT,matched
+CentralAfricanRepublic,Central African Rep.,CAF,matched
+Ukraine,Ukraine,UKR,matched
+MarshallIslands,Marshall Islands,MHL,matched
+WesternBalkans,,,regional_or_multicountry
+Seychelles,Seychelles,SYC,matched
+Maldives,Maldives,MDV,matched
+Samoa,Samoa,WSM,matched
+NorthMacedonia,Macedonia,MKD,matched
+Gambia,Gambia,GMB,matched
+Kosovo,Kosovo,XKX,name_mapped_no_ndgain_score
+Guinea-Bissau,Guinea-Bissau,GNB,matched
