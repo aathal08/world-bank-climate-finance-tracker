@@ -1,10 +1,4 @@
-"""Parse text extracted from the official World Bank FY23 climate-finance PDF.
-
-The PDF extraction places project metadata across multiple lines while the
-financial values appear as a separate ordered block. This parser therefore
-parses project blocks and numeric rows independently, then validates that both
-blocks contain the expected 322 rows before pairing them by source order.
-"""
+"""Parse text extracted from the official World Bank FY23 climate-finance PDF."""
 from __future__ import annotations
 
 import argparse
@@ -14,9 +8,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-PROJECT_START_RE = re.compile(r"^P\d{6}\s+\d+\b")
+PROJECT_START_RE = re.compile(r"P\d{6}\s+\d+\b")
 PROJECT_ID_INDEX_RE = re.compile(r"^(P\d{6})\s+(\d+)\s+(.*)$", re.DOTALL)
-NUMBER_RE = re.compile(r"^(\d+\.\d+)%\s+([\d,]+\.\d+)\s+([\d,]+\.\d+)\s+([\d,]+\.\d+)$")
+NUMBER_RE = re.compile(r"(\d+\.\d+)%\s+([\d,]+\.\d+)\s+([\d,]+\.\d+)\s+([\d,]+\.\d+)")
 REGION_RE = re.compile(r"\b(AFE|AFW|EAP|ECA|LCR|MNA|SAR)\b")
 GLOBAL_PRACTICES = (
     "AgricultureandFood",
@@ -38,13 +32,13 @@ GLOBAL_PRACTICES = (
 GP_RE = re.compile("(?:" + "|".join(re.escape(x) for x in GLOBAL_PRACTICES) + ")")
 
 
-def _clean_block(block: str) -> str:
-    """Collapse PDF line wrapping without changing source word content."""
-    return " ".join(line.strip() for line in block.splitlines() if line.strip())
+def _normalize(text: str) -> str:
+    """Normalize PDF whitespace so extraction layout does not affect parsing."""
+    return re.sub(r"\s+", " ", text.replace("\u00a0", " ")).strip()
 
 
 def _parse_project_block(block: str) -> dict:
-    block = _clean_block(block)
+    block = _normalize(block)
     match = PROJECT_ID_INDEX_RE.match(block)
     if not match:
         raise ValueError(f"Could not parse project block: {block[:120]!r}")
@@ -64,7 +58,7 @@ def _parse_project_block(block: str) -> dict:
 
     project_name = remainder[:region_match.start()].strip()
     country = tail[:gp_match.start()].strip()
-    global_practice = gp_match.group(0).strip()
+    global_practice = gp_match.group(0)
 
     if not project_name or not country:
         raise ValueError(f"Incomplete metadata for {pid}: project={project_name!r}, country={country!r}")
@@ -87,30 +81,24 @@ def parse(raw_text_path: Path):
         )
 
     raw = raw_text_path.read_text(encoding="utf-8")
-    lines = [line.rstrip("\n") for line in raw.splitlines()]
 
-    # Project metadata is an ordered block: each P-number starts a project and
-    # the next P-number starts the next project. Header/financial lines are
-    # naturally excluded because they do not start with a project ID.
-    starts = [i for i, line in enumerate(lines) if PROJECT_START_RE.match(line.strip())]
+    # Do not depend on line boundaries. Different pypdf/runner versions can
+    # place a whole PDF page on one line or wrap project fields differently.
+    starts = list(PROJECT_START_RE.finditer(raw))
     projects = []
-    for pos, start in enumerate(starts):
-        end = starts[pos + 1] if pos + 1 < len(starts) else len(lines)
-        block = "\n".join(lines[start:end])
-        projects.append(_parse_project_block(block))
+    for pos, start_match in enumerate(starts):
+        end = starts[pos + 1].start() if pos + 1 < len(starts) else len(raw)
+        projects.append(_parse_project_block(raw[start_match.start():end]))
 
     numbers = []
-    for line in lines:
-        line = line.strip()
-        nm = NUMBER_RE.match(line)
-        if nm:
-            pct, adapt, mitig, total = nm.groups()
-            numbers.append({
-                "climate_finance_pct": float(pct),
-                "adaptation_musd": float(adapt.replace(",", "")),
-                "mitigation_musd": float(mitig.replace(",", "")),
-                "total_commitment_musd": float(total.replace(",", "")),
-            })
+    for match in NUMBER_RE.finditer(raw):
+        pct, adapt, mitig, total = match.groups()
+        numbers.append({
+            "climate_finance_pct": float(pct),
+            "adaptation_musd": float(adapt.replace(",", "")),
+            "mitigation_musd": float(mitig.replace(",", "")),
+            "total_commitment_musd": float(total.replace(",", "")),
+        })
 
     if len(projects) != len(numbers):
         raise ValueError(f"Parser mismatch: {len(projects)} project rows vs {len(numbers)} numeric rows")
