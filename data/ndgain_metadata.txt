@@ -1,0 +1,14 @@
+Dataset: ND-GAIN Country Index
+Snapshot year: 2023
+Measure used: Overall Country Index score
+Scale: 0-100; higher scores are better
+Components: Vulnerability and Readiness
+Important: This project does not use the separate ND-GAIN Vulnerability or Readiness component.
+Snapshot: data/ndgain_2023.csv is a frozen 2023 snapshot used to keep the analysis reproducible when later ND-GAIN releases are published.
+Official source: https://gain-new.crc.nd.edu/ranking
+Download/source information: https://gain-new.crc.nd.edu/about/download
+Methodology: https://gain-new.crc.nd.edu/about/methodology
+License/attribution: ND-GAIN states that its data may be downloaded, analyzed, and republished under a Creative Commons license; follow the current official attribution terms.
+
+Official World Bank FY23 project-level climate co-benefits PDF:
+https://thedocs.worldbank.org/en/doc/d4a3fae669d0274d249ef9331dffe73b-0020012024/original/FY23-Project-level-CCB-data.pdf
